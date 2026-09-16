@@ -1,0 +1,487 @@
+# AI Tutor for AOOP 2026
+
+## Part A: True or False
+
+### AI Tutor Learning Cycle (ATLC) — Suggested Student Prompt:
+
+```
+
+I just learned Tuples, Lists, Aliasing, Mutability, Cloning in today’s lecture.
+
+Act as my AI Tutor.
+
+1. Generate 5 True/False questions, one question at a time, to test my conceptual understanding of today’s topic.
+2. Focus on concepts and reasoning, not memorization or Python syntax.
+3. After I answer, do not immediately tell me the correct answer.
+4. If my answer or reasoning is incorrect, give me a hint, counterexample, or follow-up question.
+5. Let me revise my answer before explaining the concept.
+6. Adjust the difficulty based on my responses.
+7. After five questions, ask me to identify one question that may be ambiguous, misleading, too easy, or technically questionable.
+8. Finish by asking me what misconception I corrected and what I am still unsure about.
+```
+
+### AI Tutor Learning Record
+
+```
+Topic: Tuples, Lists, Aliasing, Mutability, and Cloning
+Date: 9/8
+
+1. Check My Understanding
+
+Questions completed: 5 / 5
+
+Answers revised after AI hints: 1 / 5
+
+
+2. My Misconception
+
+Before: I thought...
+
+Using A[:] to copy a list would make the new list completely
+independent from the original, including all nested lists.
+
+
+Now: I understand...
+
+A[:] creates a shallow copy of the outer list.
+
+If the list contains other mutable lists, the inner lists may still be
+shared between the original list and the copied list.
+
+This means that modifying a nested list through one variable may also
+affect what the other variable sees.
+
+
+3. Challenge the AI
+
+One AI-generated question I challenged:
+
+"If A and B initially point to the same list, then whenever A changes,
+B will always change too."
+
+
+Why?
+
+[X] Ambiguous
+[ ] Oversimplified
+[ ] Technically questionable
+[ ] Too easy
+[ ] Other: __________
+
+
+Brief explanation:
+
+The phrase "A changes" is too vague.
+
+It could mean mutating the shared list, or it could mean rebinding A
+to a different object.
+
+These two situations have different results, so the wording can be
+misleading.
+
+
+4. One-Minute Reflection
+
+One thing I am still unsure about:
+
+I am still a little unsure about shallow copying with nested mutable
+objects.
+
+I want to become more confident about which list objects are actually
+copied and which objects are still shared after cloning.
+
+```
+
+## Part B: **LeetCode-style** Lecture Code Transfer
+
+AI Tutor Learning Cycle (ATLC) — Suggested Student Prompt:
+
+```
+Topic: Tuples, Lists, Aliasing, Mutability, and Cloning
+Date: 9/8
+
+
+1. Programming Challenge
+
+Challenge Title:
+Safe Team Roster Update
+
+
+Problem Summary:
+
+I was given a nested list called teams.
+
+Each inner list represents one team, and each integer represents a
+player ID.
+
+I was also given a list of updates.
+
+Each update is a tuple in the form:
+
+(team_index, player_id)
+
+For each update, I needed to add the player ID to the specified team.
+
+The important requirement was that I had to return a new nested list.
+
+The original teams list had to remain unchanged.
+
+The inner lists in the returned result also had to be independent from
+the inner lists in the original teams list.
+
+
+2. My Proposed Algorithm
+
+First, I create a new empty outer list.
+
+Then I go through each team in the original teams list.
+
+For each team, I create a copy of that inner list and add the copied
+team to the new outer list.
+
+After all teams have been copied, I go through the updates list.
+
+For each update, I get the team index and player ID from the tuple.
+
+Then I append the player ID to the corresponding copied team.
+
+Finally, I return the new nested list.
+
+
+3. Lecture Concept I Applied
+
+The main concepts I applied are:
+
+- Lists
+- Nested lists
+- Mutability
+- Aliasing
+- Cloning
+- Side effects
+
+The most important idea is that lists are mutable.
+
+If two variables point to the same list object, changing that object
+through one variable can affect what the other variable sees.
+
+This is aliasing.
+
+Because this problem uses nested lists, copying only the outer list is
+not enough.
+
+The inner lists also need to be copied so that changes to the returned
+result do not affect the original teams list.
+
+
+4. My Solution
+
+def update_teams(teams, updates):
+    new_teams = []
+
+    for team in teams:
+        new_teams.append(team[:])
+
+    for update in updates:
+        team_index = update[0]
+        player_id = update[1]
+        new_teams[team_index].append(player_id)
+
+    return new_teams
+
+
+5. Test Cases
+
+Normal Case:
+
+teams = [
+    [11, 12],
+    [21],
+    [31, 32]
+]
+
+updates = [
+    (0, 13),
+    (2, 33)
+]
+
+Expected output:
+
+[
+    [11, 12, 13],
+    [21],
+    [31, 32, 33]
+]
+
+The original teams list should still be:
+
+[
+    [11, 12],
+    [21],
+    [31, 32]
+]
+
+
+Edge Case 1: Empty Team
+
+teams = [
+    [],
+    [5, 6]
+]
+
+updates = [
+    (0, 1),
+    (0, 2),
+    (1, 7)
+]
+
+Expected output:
+
+[
+    [1, 2],
+    [5, 6, 7]
+]
+
+
+Edge Case 2: No Updates
+
+teams = [
+    [100],
+    [200, 201]
+]
+
+updates = []
+
+Expected output:
+
+[
+    [100],
+    [200, 201]
+]
+
+Even though the values are the same, the returned inner lists should be
+different list objects from the original inner lists.
+
+
+6. Why My Solution Works
+
+My solution works because I do not modify the original teams list.
+
+I create a new outer list and copy every inner team list.
+
+Because each copied team is a new list object, the result does not share
+those mutable inner lists with the original teams list.
+
+Then I apply all updates only to the copied lists.
+
+Therefore, the original teams list remains unchanged.
+
+
+7. Time Complexity
+
+Let:
+
+s = total number of player IDs already stored in all teams
+m = number of updates
+
+Copying all inner lists takes:
+
+O(s)
+
+Processing all updates takes:
+
+O(m)
+
+Therefore, the total time complexity is:
+
+O(s + m)
+
+
+8. What Idea I Transferred from the Lecture
+
+The main idea I transferred from Lecture 5 is that mutable objects can
+be shared through aliasing.
+
+Two lists can look identical but still be different objects.
+
+Also, two different outer lists can still share the same inner mutable
+lists.
+
+Because of this, I need to think about which objects are actually being
+copied and which objects are still shared.
+
+In this challenge, I used cloning to prevent unwanted side effects.
+
+
+9. Reflection
+
+One thing I learned:
+
+I learned that when working with nested lists, I should not only think
+about the outer list.
+
+I also need to think about whether the inner lists are shared.
+
+
+One misconception I corrected:
+
+Before, I thought that copying a nested list once would make everything
+inside it independent.
+
+Now, I understand that a shallow copy only copies one level.
+
+
+One thing I am still unsure about:
+
+I am still practicing how to recognize when a shallow copy is enough
+and when deeper copying is necessary.
+```
+
+### AI Tutor Learning Record — Coding Challenge
+
+```
+Name: 程婕茵
+Date: 9/9
+Topic: Tuples, Lists, Aliasing, Mutability, and Cloning
+
+
+1. Today's Challenge
+
+Core concept from today's OCW lecture:
+
+The main concept was how mutable lists behave in memory, especially
+aliasing, cloning, and side effects.
+
+I also applied the idea that nested lists may still share inner list
+objects even when the outer list has been copied.
+
+
+AI-generated coding challenge title:
+
+Safe Team Roster Update
+
+
+2. My Initial Approach - Before AI Help
+
+Before asking AI for hints, briefly describe how you planned to solve
+the problem.
+
+My approach:
+
+I planned to create a new list and copy the original teams into it.
+
+Then I would go through each update and append the new player ID to the
+correct team.
+
+My goal was to keep the original teams list unchanged while applying
+all changes to the new list.
+
+
+3. AI Tutor Help
+
+Did you ask the AI Tutor for help?
+
+[ ] No - I solved it independently
+[X] Yes - I received one or more hints
+
+
+The most useful hint/question from AI was:
+
+The AI asked me to think about whether copying only the outer list would
+also copy the inner lists.
+
+
+It helped me realize that:
+
+A shallow copy of the outer list does not automatically create new
+copies of all the inner mutable lists.
+
+If the inner lists are still shared, changing one of them can also
+affect the original data.
+
+
+4. My Revision
+
+Did you change your approach or code after interacting with AI?
+
+[ ] No
+[X] Yes
+
+
+What did you change, and why?
+
+I changed my approach so that I copied each inner team list separately.
+
+Instead of only copying the outer list, I created a new outer list and
+added a clone of each team to it.
+
+I made this change to prevent aliasing between the original team lists
+and the copied team lists.
+
+This ensures that updating the new structure does not modify the
+original one.
+
+
+5. Verification
+
+My final program:
+
+[X] Passed the provided examples
+[X] Passed additional edge cases
+[ ] Still has unresolved problems
+
+
+One edge case I tested:
+
+Input:
+
+teams = [
+    [100],
+    [200, 201]
+]
+
+updates = []
+
+
+Expected output:
+
+[
+    [100],
+    [200, 201]
+]
+
+
+Actual output:
+
+[
+    [100],
+    [200, 201]
+]
+
+The values are the same, but the inner lists in the result are separate
+list objects from the original inner lists.
+
+
+6. One-Minute Reflection
+
+What idea from the OCW lecture did you transfer to this new problem?
+
+I transferred the idea that lists are mutable objects and that aliasing
+can cause unexpected side effects.
+
+When using nested lists, I need to think about which objects are really
+being copied and which objects are still shared.
+
+
+One thing I understand better now:
+
+I understand the difference between copying an outer list and copying
+the inner mutable lists inside it.
+
+I also understand why a shallow copy may not be enough for nested data.
+
+
+One thing I am still unsure about:
+
+I am still unsure about how to decide when shallow copying is enough and
+when a deeper copy is necessary.
+```
