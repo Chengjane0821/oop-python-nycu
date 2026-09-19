@@ -24,7 +24,12 @@ Act as my AI Tutor.
 
 ```
 Topic: Tuples, Lists, Aliasing, Mutability, and Cloning
-Date: 9/8
+Date: 9/9
+
+
+========================================
+Part A: True or False
+========================================
 
 1. Check My Understanding
 
@@ -33,23 +38,182 @@ Questions completed: 5 / 5
 Answers revised after AI hints: 1 / 5
 
 
+Question 1:
+
+True or False:
+
+If A and B both refer to the same mutable list object, modifying the
+list through A can also change what is seen through B.
+
+
+My answer:
+
+True.
+
+
+Reason:
+
+A and B are two different variable names, but they refer to the same
+list object.
+
+Because the list is mutable, changing that shared object through one
+name affects what is seen through the other name.
+
+
+Question 2:
+
+True or False:
+
+If A and B initially point to the same list, then whenever A changes,
+B will always change too.
+
+
+My answer:
+
+False.
+
+
+Reason:
+
+There is an important difference between mutation and rebinding.
+
+If A is used to mutate the shared list, B will see the change.
+
+However, if A is reassigned so that it points to a different object,
+the original object has not changed.
+
+B can continue pointing to the original list.
+
+
+Question 3:
+
+True or False:
+
+If
+
+A = [[1, 2], [3, 4]]
+
+and
+
+B = A[:]
+
+then A and B are completely independent, including their inner lists.
+
+
+My first answer:
+
+True.
+
+
+AI hint:
+
+A[:] creates a new outer list, but what objects are stored inside that
+new list?
+
+Think about what happens if we execute:
+
+A[0].append(99)
+
+Does B[0] refer to a completely new inner list, or could it still refer
+to the same inner list object as A[0]?
+
+
+My revised answer:
+
+False.
+
+
+Reason:
+
+A[:] creates a shallow copy.
+
+The outer list is a new object, but the inner mutable lists are still
+shared.
+
+Therefore:
+
+A[0].append(99)
+
+can also change what is seen through B[0].
+
+
+Question 4:
+
+True or False:
+
+If a function receives a list as an argument and mutates the list
+inside the function, the caller's list cannot change unless the
+function returns the list.
+
+
+My answer:
+
+False.
+
+
+Reason:
+
+The function parameter can refer to the same mutable list object as the
+variable used by the caller.
+
+If the function mutates that object, the caller can observe the change
+even if the function returns nothing.
+
+This is a side effect.
+
+
+Question 5:
+
+True or False:
+
+If a tuple is immutable, every object stored inside the tuple must also
+be immutable.
+
+
+My answer:
+
+False.
+
+
+Reason:
+
+Tuple immutability means that the tuple itself cannot replace or remove
+its elements.
+
+However, one of its elements can refer to a mutable object such as a
+list.
+
+That list can still be modified.
+
+
 2. My Misconception
 
 Before: I thought...
 
-Using A[:] to copy a list would make the new list completely
-independent from the original, including all nested lists.
+I thought that using A[:] on a nested list created a completely
+independent copy.
+
+I assumed that both the outer list and all inner lists became new
+objects.
 
 
 Now: I understand...
 
-A[:] creates a shallow copy of the outer list.
+A[:] creates a shallow copy.
 
-If the list contains other mutable lists, the inner lists may still be
-shared between the original list and the copied list.
+The outer list is a new object, but any mutable objects stored inside it
+may still be shared with the original list.
 
-This means that modifying a nested list through one variable may also
-affect what the other variable sees.
+For example:
+
+A = [[1, 2], [3, 4]]
+B = A[:]
+
+A and B are different outer lists.
+
+However, A[0] and B[0] can still refer to the same inner list.
+
+Therefore, changing A[0] may also affect B[0].
 
 
 3. Challenge the AI
@@ -62,7 +226,7 @@ B will always change too."
 
 Why?
 
-[X] Ambiguous
+[x] Ambiguous
 [ ] Oversimplified
 [ ] Technically questionable
 [ ] Too easy
@@ -71,24 +235,31 @@ Why?
 
 Brief explanation:
 
-The phrase "A changes" is too vague.
+The phrase "A changes" is ambiguous.
 
-It could mean mutating the shared list, or it could mean rebinding A
-to a different object.
+It could mean mutating the object that A refers to, or it could mean
+rebinding A to a different object.
 
-These two situations have different results, so the wording can be
-misleading.
+These operations behave differently.
+
+If A mutates the shared object, B can observe the change.
+
+If A is rebound to another object, B can continue referring to the
+original object.
+
+The question should distinguish mutation from rebinding.
 
 
 4. One-Minute Reflection
 
 One thing I am still unsure about:
 
-I am still a little unsure about shallow copying with nested mutable
-objects.
+I am still practicing how to reason about shallow copies when several
+levels of nested mutable objects are involved.
 
-I want to become more confident about which list objects are actually
-copied and which objects are still shared after cloning.
+I understand that A[:] copies only one level, but I want to become
+faster at drawing the references in memory and deciding exactly which
+objects are shared.
 
 ```
 
@@ -142,23 +313,163 @@ Finally, ask me to explain:
 ```
 Name: 程婕茵
 Date: 9/9
-Topic: Tuples, Lists, Aliasing, Mutability, and Cloning
+Topic: Aliasing, Mutability, Cloning, and Nested Lists
 
 
 1. Today's Challenge
 
 Core concept from today's OCW lecture:
 
-The main concept was how mutable lists behave in memory, especially
-aliasing, cloning, and side effects.
+Lists are mutable objects.
 
-I also applied the idea that nested lists may still share inner list
-objects even when the outer list has been copied.
+Two different variable names can refer to the same list object, which
+creates aliasing.
+
+Mutating a shared object can create side effects.
+
+Cloning can create a new list object, but with nested lists it is
+important to distinguish between copying the outer list and copying the
+inner mutable lists.
 
 
 AI-generated coding challenge title:
 
 Safe Team Roster Update
+
+
+Problem Statement:
+
+You are given a nested list called teams.
+
+Each inner list represents one team, and each integer represents a
+player ID.
+
+You are also given a list of updates.
+
+Each update is a tuple:
+
+(team_index, player_id)
+
+For each update, add player_id to the end of the specified team.
+
+Return a new nested list containing all updates.
+
+The original teams list must remain unchanged.
+
+The inner team lists in the returned result must also be independent
+from the inner team lists in the original data.
+
+This means that modifying a team in the returned result later must not
+modify the corresponding team in the original list.
+
+
+Input / Output Specification:
+
+Input:
+
+teams
+    A list of lists of integers.
+
+updates
+    A list of tuples in the form:
+
+    (team_index, player_id)
+
+
+Output:
+
+A new nested list containing the updated teams.
+
+The original teams list must remain unchanged.
+
+
+Constraints:
+
+1. teams may contain zero or more teams.
+2. Each team contains zero or more integer player IDs.
+3. Every team_index in updates is a valid index.
+4. The same team may receive multiple updates.
+5. Use only concepts covered through Lecture 5.
+6. Do not use copy.deepcopy() or another automatic deep-copy utility.
+
+
+Examples:
+
+Example 1
+
+Input:
+
+teams = [
+    [11, 12],
+    [21],
+    [31, 32]
+]
+
+updates = [
+    (0, 13),
+    (2, 33)
+]
+
+Output:
+
+[
+    [11, 12, 13],
+    [21],
+    [31, 32, 33]
+]
+
+The original teams must still be:
+
+[
+    [11, 12],
+    [21],
+    [31, 32]
+]
+
+
+Example 2
+
+Input:
+
+teams = [
+    [],
+    [5, 6]
+]
+
+updates = [
+    (0, 1),
+    (0, 2),
+    (1, 7)
+]
+
+Output:
+
+[
+    [1, 2],
+    [5, 6, 7]
+]
+
+
+Example 3
+
+Input:
+
+teams = [
+    [100],
+    [200, 201]
+]
+
+updates = []
+
+Output:
+
+[
+    [100],
+    [200, 201]
+]
+
+Although the values are identical, the returned inner lists should be
+different mutable list objects from the original inner lists.
 
 
 2. My Initial Approach - Before AI Help
@@ -168,13 +479,21 @@ the problem.
 
 My approach:
 
-I planned to create a new list and copy the original teams into it.
+I planned to make a copy of teams and then apply each update to the new
+list.
 
-Then I would go through each update and append the new player ID to the
-correct team.
+For every update, I would use the team index to find the correct team
+and append the new player ID.
 
-My goal was to keep the original teams list unchanged while applying
-all changes to the new list.
+My goal was to avoid changing the original teams list.
+
+
+Concept from the lecture that I am applying:
+
+I am applying cloning, mutability, aliasing, and side effects.
+
+Because lists are mutable, I need to make sure that the result does not
+share the same mutable team lists with the original data.
 
 
 3. AI Tutor Help
@@ -182,22 +501,23 @@ all changes to the new list.
 Did you ask the AI Tutor for help?
 
 [ ] No - I solved it independently
-[X] Yes - I received one or more hints
+[x] Yes - I received one or more hints
 
 
 The most useful hint/question from AI was:
 
-The AI asked me to think about whether copying only the outer list would
-also copy the inner lists.
+"If you copy only the outer list, what objects do the elements of the
+new outer list refer to?"
 
 
 It helped me realize that:
 
-A shallow copy of the outer list does not automatically create new
-copies of all the inner mutable lists.
+Creating a new outer list is not enough.
 
-If the inner lists are still shared, changing one of them can also
-affect the original data.
+If both outer lists still contain references to the same inner team
+lists, changing a team through the copy can still modify the original.
+
+I need to create a new list object for each inner team.
 
 
 4. My Revision
@@ -205,29 +525,28 @@ affect the original data.
 Did you change your approach or code after interacting with AI?
 
 [ ] No
-[X] Yes
+[x] Yes
 
 
 What did you change, and why?
 
-I changed my approach so that I copied each inner team list separately.
+Originally, I was thinking mainly about copying the outer list.
 
-Instead of only copying the outer list, I created a new outer list and
-added a clone of each team to it.
+I revised the approach so that I create a new outer list and clone each
+inner team separately.
 
-I made this change to prevent aliasing between the original team lists
-and the copied team lists.
+This prevents the returned structure from sharing mutable inner lists
+with the original teams list.
 
-This ensures that updating the new structure does not modify the
-original one.
+I made this change to avoid unwanted side effects caused by aliasing.
 
 
 5. Verification
 
 My final program:
 
-[X] Passed the provided examples
-[X] Passed additional edge cases
+[x] Passed the provided examples
+[x] Passed additional edge cases
 [ ] Still has unresolved problems
 
 
@@ -258,31 +577,39 @@ Actual output:
     [200, 201]
 ]
 
-The values are the same, but the inner lists in the result are separate
-list objects from the original inner lists.
+
+Additional aliasing check:
+
+After the function returns, I can modify one of the result's inner
+lists.
+
+The corresponding inner list in the original teams data should remain
+unchanged.
 
 
 6. One-Minute Reflection
 
 What idea from the OCW lecture did you transfer to this new problem?
 
-I transferred the idea that lists are mutable objects and that aliasing
-can cause unexpected side effects.
+I transferred the idea that the values printed on the screen do not
+tell me whether two variables refer to the same object.
 
-When using nested lists, I need to think about which objects are really
-being copied and which objects are still shared.
+With mutable objects, I need to think about references in memory.
+
+For nested lists, creating a new outer list does not automatically make
+all inner objects independent.
 
 
 One thing I understand better now:
 
-I understand the difference between copying an outer list and copying
-the inner mutable lists inside it.
+I understand the difference between aliasing and cloning.
 
-I also understand why a shallow copy may not be enough for nested data.
+I also understand why A[:] creates a shallow copy and why that can still
+leave nested mutable objects shared.
 
 
 One thing I am still unsure about:
 
-I am still unsure about how to decide when shallow copying is enough and
-when a deeper copy is necessary.
+I am still unsure about how to recognize when one-level cloning is
+enough and when a program needs to copy objects at multiple levels.
 ```

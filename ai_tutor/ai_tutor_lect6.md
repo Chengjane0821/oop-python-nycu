@@ -6,7 +6,7 @@
 
 ```
 
-I just learned Tuples, Lists, Aliasing, Mutability, Cloning in today’s lecture.
+I just learned Recursion and Dictionaries in today’s lecture.
 
 Act as my AI Tutor.
 
@@ -26,6 +26,11 @@ Act as my AI Tutor.
 Topic: Recursion and Dictionaries
 Date: 9/16
 
+
+========================================
+Part A: True or False
+========================================
+
 1. Check My Understanding
 
 Questions completed: 5 / 5
@@ -33,29 +38,159 @@ Questions completed: 5 / 5
 Answers revised after AI hints: 1 / 5
 
 
+Question 1:
+
+True or False:
+
+A function is a correct recursive solution simply because it calls
+itself.
+
+
+My answer:
+
+False.
+
+
+Reason:
+
+Calling itself only makes the function recursive syntactically.
+
+A correct recursive solution also needs a valid base case and a
+recursive step that moves toward that base case.
+
+The recursive calls must correctly solve smaller versions of the same
+problem.
+
+
+Question 2:
+
+True or False:
+
+If a recursive function has a base case somewhere in its code, it is
+guaranteed to terminate.
+
+
+My first answer:
+
+True.
+
+
+AI hint:
+
+Consider a function with a base case for n == 0, but whose recursive
+step calls itself using n + 1.
+
+If the function starts with n = 5, will it ever reach the base case?
+
+
+My revised answer:
+
+False.
+
+
+Reason:
+
+Having a base case is not enough.
+
+The recursive step must move the problem toward the base case.
+
+If each call moves farther away, or does not make progress, the base
+case may never be reached.
+
+
+Question 3:
+
+True or False:
+
+Each recursive call to a function has its own local environment.
+
+
+My answer:
+
+True.
+
+
+Reason:
+
+Each recursive call creates a new function scope.
+
+Local variables in one call are separate from the local variables in
+another call.
+
+When the deeper recursive call returns, execution continues in the
+previous call's environment.
+
+
+Question 4:
+
+True or False:
+
+A dictionary can associate a key with a value and can be modified after
+it is created.
+
+
+My answer:
+
+True.
+
+
+Reason:
+
+Dictionaries store key-value pairs and are mutable.
+
+A program can add new keys, update existing values, and use keys to
+retrieve information.
+
+
+Question 5:
+
+True or False:
+
+A recursive solution must always physically create a smaller list before
+making the next recursive call.
+
+
+My answer:
+
+False.
+
+
+Reason:
+
+The problem must become smaller conceptually, but the program does not
+have to create a new list.
+
+For example, a recursive function can keep the original list and use an
+index that moves forward.
+
+The remaining work becomes smaller even though the list object itself
+does not change.
+
+
 2. My Misconception
 
 Before: I thought...
 
-A recursive function only needed to call itself repeatedly until the
-answer appeared.
+I thought that recursion mainly meant that a function keeps calling
+itself until the answer appears.
 
-I did not fully understand why a base case was necessary, or why the
-recursive call had to work on a smaller version of the same problem.
+I did not fully understand why the base case and the direction of the
+recursive step were both important.
 
 
 Now: I understand...
 
-A recursive function needs at least one base case that can be solved
-directly.
+A recursive solution has two essential parts.
 
-The recursive step should reduce the original problem into a simpler
-version of the same problem.
+First, it needs a base case that can be solved directly.
 
-Each recursive call should move closer to the base case.
+Second, the recursive step needs to transform the problem into a
+simpler version of the same problem.
 
-Otherwise, the function may continue calling itself forever and create
-infinite recursion.
+Each recursive call must make progress toward the base case.
+
+A base case that can never be reached does not prevent infinite
+recursion.
 
 
 3. Challenge the AI
@@ -68,32 +203,37 @@ One AI-generated question I challenged:
 Why?
 
 [ ] Ambiguous
-[X] Oversimplified
-[X] Technically questionable
+[x] Oversimplified
+[x] Technically questionable
 [ ] Too easy
 [ ] Other: __________
 
 
 Brief explanation:
 
-Simply calling itself does not make a recursive function correct.
+Calling itself only tells us that a function is recursive.
 
-A recursive solution also needs a valid base case and a recursive step
-that reduces the problem toward that base case.
+It does not prove that the algorithm is correct.
 
-If the input does not become simpler, the recursion may never stop.
+A valid recursive solution also needs a correct base case, a recursive
+step that solves a smaller version of the same problem, and progress
+toward the base case.
+
+A recursive function can call itself and still produce an incorrect
+answer or fail to terminate.
 
 
 4. One-Minute Reflection
 
 One thing I am still unsure about:
 
-I am still practicing how to identify the correct base case and how to
-decide what the smaller recursive problem should be.
+I am still practicing how to choose the correct base case and how to
+identify the smaller version of a problem.
 
-I also want to become more confident about tracing the different
-function calls and understanding which local variables belong to each
-recursive call.
+I also want to become more comfortable tracing recursive calls and
+understanding how several function environments can exist at the same
+time.
+
 ```
 
 ## Part B: **LeetCode-style** Lecture Code Transfer

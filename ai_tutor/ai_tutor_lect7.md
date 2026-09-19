@@ -6,7 +6,7 @@
 
 ```
 
-I just learned Tuples, Lists, Aliasing, Mutability, Cloning in today’s lecture.
+I just learned Testing, Debugging, Exceptions, and Assertions in today’s lecture.
 
 Act as my AI Tutor.
 
