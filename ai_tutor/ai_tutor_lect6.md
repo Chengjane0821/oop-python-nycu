@@ -284,6 +284,10 @@ Finally, ask me to explain:
 ### AI Tutor Learning Record — Coding Challenge
 
 ```
+========================================
+Part B: LeetCode-style Lecture Code Transfer
+========================================
+
 Name: 程婕茵
 Date: 9/16
 Topic: Recursion and Dictionaries
@@ -293,21 +297,129 @@ Topic: Recursion and Dictionaries
 
 Core concept from today's OCW lecture:
 
-The main concept was recursion.
+The main concepts are recursion and dictionaries.
 
 A recursive solution reduces a problem into a smaller version of the
 same problem.
 
 A correct recursive function needs at least one base case and a
-recursive step that eventually reaches the base case.
+recursive step that moves the problem toward the base case.
 
-The lecture also introduced dictionaries as another mutable object
-type that stores information using keys and values.
+The lecture also introduced dictionaries as mutable objects that store
+information using key-value pairs.
 
 
 AI-generated coding challenge title:
 
 Recursive Word Frequency Counter
+
+
+Problem Statement:
+
+You are given a list of words.
+
+Your task is to count how many times each word appears in the list and
+return the result as a dictionary.
+
+Each unique word should be used as a dictionary key.
+
+The value associated with each key should be the number of times that
+word appears in the input list.
+
+You must process the list recursively.
+
+You may not use a for loop or while loop to process the words.
+
+
+Input / Output Specification:
+
+Input:
+
+words
+
+A list of strings.
+
+
+Output:
+
+A dictionary.
+
+For every unique word in the input list:
+
+result[word]
+
+should equal the number of times that word appears.
+
+
+If the input list is empty:
+
+Return:
+
+{}
+
+
+Constraints:
+
+1. words may be empty.
+2. Every element in words is a string.
+3. Use recursion to process the input list.
+4. Do not use a for loop or while loop to process the words.
+5. Use a dictionary to store word frequencies.
+6. Each recursive call must move closer to a base case.
+7. Use only programming concepts covered through Lecture 6.
+
+
+Examples:
+
+Example 1
+
+Input:
+
+words = [
+    "cat",
+    "dog",
+    "cat",
+    "bird",
+    "dog",
+    "cat"
+]
+
+Output:
+
+{
+    "cat": 3,
+    "dog": 2,
+    "bird": 1
+}
+
+
+Example 2
+
+Input:
+
+words = []
+
+Output:
+
+{}
+
+
+Example 3
+
+Input:
+
+words = [
+    "apple",
+    "apple",
+    "apple",
+    "apple"
+]
+
+Output:
+
+{
+    "apple": 4
+}
 
 
 2. My Initial Approach - Before AI Help
@@ -320,12 +432,26 @@ My approach:
 I planned to go through the list of words and store the count of each
 word in a dictionary.
 
-If the word was already in the dictionary, I would increase its value.
+If a word already existed as a key in the dictionary, I would increase
+its value by 1.
 
-If the word was not in the dictionary, I would create a new entry.
+If the word did not exist, I would add it to the dictionary with a
+value of 1.
 
 At first, I was thinking about using a normal for loop because that was
-the most familiar approach.
+the most familiar way for me to process a list.
+
+
+Concept from the lecture that I am applying:
+
+I am applying recursion and dictionaries.
+
+The dictionary stores each word as a key and its frequency as a value.
+
+For the recursive part, the larger problem is reduced into:
+
+1. process the current word
+2. recursively process the remaining unprocessed words
 
 
 3. AI Tutor Help
@@ -333,12 +459,10 @@ the most familiar approach.
 Did you ask the AI Tutor for help?
 
 [ ] No - I solved it independently
-[X] Yes - I received one or more hints
+[x] Yes - I received one or more hints
 
 
 The most useful hint/question from AI was:
-
-The AI asked me:
 
 "What is the smallest version of the problem that you can solve
 directly?"
@@ -346,13 +470,13 @@ directly?"
 
 It helped me realize that:
 
-When the index reaches the end of the word list, there is nothing left
-to process.
+When the current index reaches the length of the list, there are no more
+words to process.
 
 That can be used as the base case.
 
-It also helped me see that after processing one word, the remaining
-problem is simply to process the next word and everything after it.
+It also helped me understand that after processing one word, the
+remaining problem is the same problem with one fewer unprocessed word.
 
 
 4. My Revision
@@ -360,36 +484,119 @@ problem is simply to process the next word and everything after it.
 Did you change your approach or code after interacting with AI?
 
 [ ] No
-[X] Yes
+[x] Yes
 
 
 What did you change, and why?
 
-I changed my approach from an iterative solution to a recursive
-solution.
+Originally, I planned to solve the problem using a for loop.
 
-I added an index parameter to keep track of which word should be
-processed.
+I changed the approach so that a recursive helper function keeps track
+of the current position in the list.
 
-I also added a base case that stops when the index reaches the length of
-the list.
+The base case happens when the index reaches the length of the list.
 
-For every recursive call, I increase the index by 1.
+At that point, there are no more words to process.
 
-I made this change so that each recursive call works on a smaller
-remaining portion of the input.
+For every recursive step, the index increases by 1.
+
+This means that each recursive call has a smaller amount of remaining
+work and moves closer to the base case.
+
+The dictionary is updated as the recursive calls process each word.
 
 
-5. Verification
+5. My Final Program
+
+def count_words(words):
+    counts = {}
+
+    def helper(index):
+        if index == len(words):
+            return
+
+        word = words[index]
+
+        if word in counts:
+            counts[word] += 1
+        else:
+            counts[word] = 1
+
+        helper(index + 1)
+
+    helper(0)
+
+    return counts
+
+
+6. Why My Solution Works
+
+The base case is:
+
+if index == len(words):
+    return
+
+This stops the recursion when all words have been processed.
+
+For every recursive call, the index increases by 1.
+
+Therefore, the amount of remaining work decreases on every call.
+
+Eventually, the index reaches the length of the list and the base case
+is reached.
+
+For each word:
+
+If the word already exists in the dictionary, its count is increased by
+1.
+
+If the word does not exist, it is added to the dictionary with a count
+of 1.
+
+Because every word is processed exactly once, the dictionary contains
+the correct frequency of each word when the recursion finishes.
+
+
+7. Verification
 
 My final program:
 
-[X] Passed the provided examples
-[X] Passed additional edge cases
+[x] Passed the provided examples
+[x] Passed additional edge cases
 [ ] Still has unresolved problems
 
 
-One edge case I tested:
+Normal Case:
+
+Input:
+
+words = [
+    "cat",
+    "dog",
+    "cat",
+    "bird",
+    "dog",
+    "cat"
+]
+
+Expected output:
+
+{
+    "cat": 3,
+    "dog": 2,
+    "bird": 1
+}
+
+Actual output:
+
+{
+    "cat": 3,
+    "dog": 2,
+    "bird": 1
+}
+
+
+Edge Case 1: Empty List
 
 Input:
 
@@ -403,40 +610,163 @@ Actual output:
 
 {}
 
-The recursive function immediately reaches the base case because the
-starting index is equal to the length of the empty list.
+
+Why this edge case matters:
+
+The recursive helper starts with index = 0.
+
+Since len(words) is also 0, the base case is reached immediately.
 
 
-6. One-Minute Reflection
+Edge Case 2: One Repeated Word
+
+Input:
+
+words = [
+    "apple",
+    "apple",
+    "apple",
+    "apple"
+]
+
+Expected output:
+
+{
+    "apple": 4
+}
+
+Actual output:
+
+{
+    "apple": 4
+}
+
+
+Why this edge case matters:
+
+This checks whether the program correctly updates an existing dictionary
+key multiple times.
+
+
+Edge Case 3: All Words Are Different
+
+Input:
+
+words = [
+    "red",
+    "blue",
+    "green"
+]
+
+Expected output:
+
+{
+    "red": 1,
+    "blue": 1,
+    "green": 1
+}
+
+Actual output:
+
+{
+    "red": 1,
+    "blue": 1,
+    "green": 1
+}
+
+
+8. Time and Space Complexity
+
+Let:
+
+n = number of words in the input list
+
+
+Time Complexity:
+
+Each word is processed exactly once.
+
+Dictionary lookup and update are treated as O(1) on average.
+
+Therefore, the total time complexity is:
+
+O(n)
+
+
+Space Complexity:
+
+The dictionary may contain up to n different words.
+
+Therefore, the dictionary can require:
+
+O(n)
+
+space.
+
+The recursive call stack may also contain up to n active recursive
+calls.
+
+Therefore, the recursive stack can require:
+
+O(n)
+
+space.
+
+The total additional space complexity is:
+
+O(n)
+
+
+9. What Idea I Transferred from the Lecture
+
+The main idea I transferred from Lecture 6 is decrease-and-conquer.
+
+Instead of trying to solve the entire problem at once, each recursive
+call processes one word and leaves a smaller amount of work for the next
+recursive call.
+
+I also transferred the idea of using a dictionary to associate keys with
+values.
+
+In this problem:
+
+word = key
+
+frequency = value
+
+The dictionary is mutable, so the recursive calls can update the same
+dictionary while processing the list.
+
+
+10. One-Minute Reflection
 
 What idea from the OCW lecture did you transfer to this new problem?
 
-I transferred the idea of decrease-and-conquer.
+I transferred the idea that recursion solves a larger problem by reducing
+it to smaller versions of the same problem.
 
-Instead of trying to process the entire list at once, the recursive
-function handles one word and then solves the same problem for the
-remaining words.
+Each recursive call must move closer to a base case.
 
-I also used a dictionary to associate each word with its frequency.
+I also used a dictionary to store information as key-value pairs.
 
 
 One thing I understand better now:
 
-I understand that a recursive solution needs both:
+I understand that recursion is not just a function calling itself.
 
-1. a base case
-2. a recursive step that moves toward the base case
+A recursive solution also needs a base case and a recursive step that
+makes progress toward that base case.
 
-I also understand how a dictionary can be updated using keys and
-values.
+I also understand how a dictionary can be updated while recursive calls
+are processing data.
 
 
 One thing I am still unsure about:
 
-I am still unsure about how recursion uses memory when many function
-calls are waiting to return.
+I am still practicing how to trace recursive calls when several calls
+are active at the same time.
 
-I also want more practice deciding whether recursion or iteration is
-the better choice for a problem.
-
+I also want to understand recursion memory usage better, especially what
+happens to each function's local variables while deeper recursive calls
+are running.
 ```
