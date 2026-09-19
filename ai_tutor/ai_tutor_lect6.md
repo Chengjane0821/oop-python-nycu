@@ -101,296 +101,44 @@ recursive call.
 AI Tutor Learning Cycle (ATLC) — Suggested Student Prompt:
 
 ```
-Topic: Recursion and Dictionaries
-Date: 9/16
+I have just studied the following lecture code from today’s OCW programming lecture.
 
+[LECTURE CODE]
 
-1. Programming Challenge
+Act as my AI Tutor.
 
-Challenge Title:
-Recursive Word Frequency Counter
+Based on the concepts and programming patterns demonstrated in the lecture code, generate ONE new LeetCode-style programming challenge.
 
+Requirements:
 
-Problem Summary:
+1. Test the same core concept as the lecture code.
+2. Do not simply ask me to reproduce or slightly modify the lecture example.
+3. Create a new problem that requires me to transfer what I learned.
+4. Use only programming concepts that have been covered in the course so far.
+5. Provide:
+    * Problem statement
+    * Input/output specification
+    * Constraints
+    * 2–3 examples
+6. Do NOT provide code, pseudocode, or the solution.
 
-I was given a list of words.
+Before I write code:
 
-I needed to count how many times each word appeared and return the
-result as a dictionary.
+7. Ask me to explain my proposed algorithm.
+8. Ask me to identify which concept from the lecture code I am applying.
+9. If my reasoning is incorrect, give me a hint or counterexample instead of the answer.
 
-However, instead of using a loop to process the list, I had to solve
-the problem recursively.
+After I write my code:
 
-The dictionary should use each word as a key and the number of
-occurrences as the corresponding value.
+10. Test my solution using normal and edge cases.
+11. If my code fails, help me identify the problem without rewriting the solution for me.
+12. Ask me to revise my solution.
 
+Finally, ask me to explain:
 
-Example:
-
-words = [
-    "cat",
-    "dog",
-    "cat",
-    "bird",
-    "dog",
-    "cat"
-]
-
-Expected output:
-
-{
-    "cat": 3,
-    "dog": 2,
-    "bird": 1
-}
-
-
-2. My Proposed Algorithm
-
-I define a recursive helper function that processes one position in the
-list at a time.
-
-The function receives:
-
-- the list of words
-- the current index
-- a dictionary storing the counts
-
-The base case happens when the index reaches the length of the list.
-
-At that point, there are no more words to process, so the dictionary is
-returned.
-
-For the recursive step, I get the current word.
-
-If the word already exists as a key in the dictionary, I increase its
-count by 1.
-
-Otherwise, I add the word to the dictionary with a count of 1.
-
-Then I recursively call the function using the next index.
-
-
-3. Lecture Concept I Applied
-
-The main concepts I applied are:
-
-- Recursion
-- Base cases
-- Recursive steps
-- Dictionaries
-- Keys and values
-- Mutability
-
-The most important recursion idea is that a large problem can be
-reduced to a smaller version of the same problem.
-
-In this challenge, processing the whole list becomes:
-
-process the current word
-
-and then
-
-process the remaining words.
-
-The dictionary is useful because each word can be stored as a key and
-its frequency can be stored as the value.
-
-Because dictionaries are mutable, the recursive calls can update the
-same dictionary object while processing the list.
-
-
-4. My Solution
-
-def count_words(words):
-    counts = {}
-
-    def helper(index):
-        if index == len(words):
-            return
-
-        word = words[index]
-
-        if word in counts:
-            counts[word] += 1
-        else:
-            counts[word] = 1
-
-        helper(index + 1)
-
-    helper(0)
-
-    return counts
-
-
-5. Test Cases
-
-Normal Case:
-
-words = [
-    "cat",
-    "dog",
-    "cat",
-    "bird",
-    "dog",
-    "cat"
-]
-
-Expected output:
-
-{
-    "cat": 3,
-    "dog": 2,
-    "bird": 1
-}
-
-
-Edge Case 1: Empty List
-
-words = []
-
-Expected output:
-
-{}
-
-
-Edge Case 2: One Repeated Word
-
-words = [
-    "apple",
-    "apple",
-    "apple",
-    "apple"
-]
-
-Expected output:
-
-{
-    "apple": 4
-}
-
-
-Edge Case 3: All Different Words
-
-words = [
-    "red",
-    "blue",
-    "green"
-]
-
-Expected output:
-
-{
-    "red": 1,
-    "blue": 1,
-    "green": 1
-}
-
-
-6. Why My Solution Works
-
-The base case is:
-
-if index == len(words):
-    return
-
-This stops the recursion when every word has been processed.
-
-For each recursive call, the index increases by 1.
-
-Therefore, every call moves closer to the base case.
-
-For each word, the dictionary stores the number of times that word has
-appeared.
-
-If the key already exists, its value is increased.
-
-If the key does not exist, a new dictionary entry is created.
-
-After processing the current word, the recursive call processes the
-next word.
-
-Therefore, every element is processed exactly once.
-
-
-7. Time and Space Complexity
-
-Let:
-
-n = number of words in the input list
-
-Each word is processed once.
-
-Dictionary lookup and update are treated as O(1) on average.
-
-Therefore, the total time complexity is:
-
-O(n)
-
-The dictionary may contain up to n different words.
-
-Therefore, the dictionary requires:
-
-O(n)
-
-additional space.
-
-The recursive call stack may also contain up to n calls.
-
-Therefore, the recursion uses:
-
-O(n)
-
-stack space.
-
-
-8. What Idea I Transferred from the Lecture
-
-The main idea I transferred from Lecture 6 is that recursion works by
-reducing a problem to a smaller version of the same problem.
-
-A recursive function needs a base case that can be solved directly.
-
-It also needs a recursive step that moves the input closer to that base
-case.
-
-I also used a dictionary to store key-value pairs.
-
-In this challenge, each word is a key and its frequency is the value.
-
-I learned that dictionaries are mutable, so their contents can be
-updated while the recursive function is running.
-
-
-9. Reflection
-
-One thing I learned:
-
-I learned that recursion is not only about a function calling itself.
-
-The important part is that each call should solve a smaller version of
-the same problem and eventually reach a base case.
-
-
-One misconception I corrected:
-
-Before, I thought recursion automatically stopped when the answer was
-finished.
-
-Now, I understand that the programmer must explicitly define a base
-case.
-
-Without a correct base case, recursion may continue indefinitely.
-
-
-One thing I am still unsure about:
-
-I am still practicing how to trace recursive calls in my head,
-especially when several calls are active at the same time.
-
-I also want to better understand when recursion is clearer than using a
-loop.
-
+* Why my solution works
+* Its time complexity
+* What idea from the lecture code I transferred to this new problem
 ```
 
 ### AI Tutor Learning Record — Coding Challenge

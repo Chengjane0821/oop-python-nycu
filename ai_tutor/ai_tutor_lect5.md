@@ -97,243 +97,44 @@ copied and which objects are still shared after cloning.
 AI Tutor Learning Cycle (ATLC) — Suggested Student Prompt:
 
 ```
-Topic: Tuples, Lists, Aliasing, Mutability, and Cloning
-Date: 9/8
+I have just studied the following lecture code from today’s OCW programming lecture.
 
+[LECTURE CODE]
 
-1. Programming Challenge
+Act as my AI Tutor.
 
-Challenge Title:
-Safe Team Roster Update
+Based on the concepts and programming patterns demonstrated in the lecture code, generate ONE new LeetCode-style programming challenge.
 
+Requirements:
 
-Problem Summary:
+1. Test the same core concept as the lecture code.
+2. Do not simply ask me to reproduce or slightly modify the lecture example.
+3. Create a new problem that requires me to transfer what I learned.
+4. Use only programming concepts that have been covered in the course so far.
+5. Provide:
+    * Problem statement
+    * Input/output specification
+    * Constraints
+    * 2–3 examples
+6. Do NOT provide code, pseudocode, or the solution.
 
-I was given a nested list called teams.
+Before I write code:
 
-Each inner list represents one team, and each integer represents a
-player ID.
+7. Ask me to explain my proposed algorithm.
+8. Ask me to identify which concept from the lecture code I am applying.
+9. If my reasoning is incorrect, give me a hint or counterexample instead of the answer.
 
-I was also given a list of updates.
+After I write my code:
 
-Each update is a tuple in the form:
+10. Test my solution using normal and edge cases.
+11. If my code fails, help me identify the problem without rewriting the solution for me.
+12. Ask me to revise my solution.
 
-(team_index, player_id)
+Finally, ask me to explain:
 
-For each update, I needed to add the player ID to the specified team.
-
-The important requirement was that I had to return a new nested list.
-
-The original teams list had to remain unchanged.
-
-The inner lists in the returned result also had to be independent from
-the inner lists in the original teams list.
-
-
-2. My Proposed Algorithm
-
-First, I create a new empty outer list.
-
-Then I go through each team in the original teams list.
-
-For each team, I create a copy of that inner list and add the copied
-team to the new outer list.
-
-After all teams have been copied, I go through the updates list.
-
-For each update, I get the team index and player ID from the tuple.
-
-Then I append the player ID to the corresponding copied team.
-
-Finally, I return the new nested list.
-
-
-3. Lecture Concept I Applied
-
-The main concepts I applied are:
-
-- Lists
-- Nested lists
-- Mutability
-- Aliasing
-- Cloning
-- Side effects
-
-The most important idea is that lists are mutable.
-
-If two variables point to the same list object, changing that object
-through one variable can affect what the other variable sees.
-
-This is aliasing.
-
-Because this problem uses nested lists, copying only the outer list is
-not enough.
-
-The inner lists also need to be copied so that changes to the returned
-result do not affect the original teams list.
-
-
-4. My Solution
-
-def update_teams(teams, updates):
-    new_teams = []
-
-    for team in teams:
-        new_teams.append(team[:])
-
-    for update in updates:
-        team_index = update[0]
-        player_id = update[1]
-        new_teams[team_index].append(player_id)
-
-    return new_teams
-
-
-5. Test Cases
-
-Normal Case:
-
-teams = [
-    [11, 12],
-    [21],
-    [31, 32]
-]
-
-updates = [
-    (0, 13),
-    (2, 33)
-]
-
-Expected output:
-
-[
-    [11, 12, 13],
-    [21],
-    [31, 32, 33]
-]
-
-The original teams list should still be:
-
-[
-    [11, 12],
-    [21],
-    [31, 32]
-]
-
-
-Edge Case 1: Empty Team
-
-teams = [
-    [],
-    [5, 6]
-]
-
-updates = [
-    (0, 1),
-    (0, 2),
-    (1, 7)
-]
-
-Expected output:
-
-[
-    [1, 2],
-    [5, 6, 7]
-]
-
-
-Edge Case 2: No Updates
-
-teams = [
-    [100],
-    [200, 201]
-]
-
-updates = []
-
-Expected output:
-
-[
-    [100],
-    [200, 201]
-]
-
-Even though the values are the same, the returned inner lists should be
-different list objects from the original inner lists.
-
-
-6. Why My Solution Works
-
-My solution works because I do not modify the original teams list.
-
-I create a new outer list and copy every inner team list.
-
-Because each copied team is a new list object, the result does not share
-those mutable inner lists with the original teams list.
-
-Then I apply all updates only to the copied lists.
-
-Therefore, the original teams list remains unchanged.
-
-
-7. Time Complexity
-
-Let:
-
-s = total number of player IDs already stored in all teams
-m = number of updates
-
-Copying all inner lists takes:
-
-O(s)
-
-Processing all updates takes:
-
-O(m)
-
-Therefore, the total time complexity is:
-
-O(s + m)
-
-
-8. What Idea I Transferred from the Lecture
-
-The main idea I transferred from Lecture 5 is that mutable objects can
-be shared through aliasing.
-
-Two lists can look identical but still be different objects.
-
-Also, two different outer lists can still share the same inner mutable
-lists.
-
-Because of this, I need to think about which objects are actually being
-copied and which objects are still shared.
-
-In this challenge, I used cloning to prevent unwanted side effects.
-
-
-9. Reflection
-
-One thing I learned:
-
-I learned that when working with nested lists, I should not only think
-about the outer list.
-
-I also need to think about whether the inner lists are shared.
-
-
-One misconception I corrected:
-
-Before, I thought that copying a nested list once would make everything
-inside it independent.
-
-Now, I understand that a shallow copy only copies one level.
-
-
-One thing I am still unsure about:
-
-I am still practicing how to recognize when a shallow copy is enough
-and when deeper copying is necessary.
+* Why my solution works
+* Its time complexity
+* What idea from the lecture code I transferred to this new problem
 ```
 
 ### AI Tutor Learning Record — Coding Challenge
